@@ -15,3 +15,17 @@ def index(request):
     }
 
     return render(request, 'main_page.html', context)
+
+
+def category_page_view(request, category_id):
+    articles = Article.objects.filter(category=category_id)
+
+    trends = Article.objects.all().order_by('-views')
+
+    context = {
+        "title": f"Категория: {Category.objects.get(id=category_id).title}",
+        "aritcles": articles,
+        "trends": trends
+    }
+
+    return render(request, "category_page.html", context)
